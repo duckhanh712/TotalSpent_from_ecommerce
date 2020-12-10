@@ -37,7 +37,7 @@ function getStatistics() {
 			}
 		}
 	};
-	xhttp.open("GET", "https://shopee.vn/api/v1/orders/?order_type=3&offset=" + offset + "&limit=20", true);
+	xhttp.open("GET", "https://shopee.vn/api/v1/orders/?order_type=3&offset=" + offset + "&limit=10", true);
 	xhttp.send();
 }
 

@@ -33,7 +33,6 @@ function getStatistics() {
 				console.log("%cTổng đơn hàng thành công: "+"%c "+moneyFormat(totalOrders), "font-size: 20px;","font-size: 20px; color:red");
 				console.log("%cTổng chi tiêu: "+"%c "+moneyFormat(totalSpent)+"đ","font-size: 20px;","font-size: 20px; color:red");
                 console.log("%cTổng tiền ship: "+"%c "+moneyFormat(totalShippingSpent)+"đ", "font-size: 20px;","font-size: 20px; color:red");
-                console.log("%cfb: duckhanh0712","font-size: 20px; color:blue");
 			}
 		}
 	};

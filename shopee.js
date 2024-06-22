@@ -1,6 +1,5 @@
 var totalOrders = 0;
 var totalSpent = 0;
-var totalShippingSpent = 0;
 var pulling = true;
 var offset = 0;
 
@@ -9,7 +8,7 @@ function getStatistics() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			orders = JSON.parse(this.responseText)['orders'];
+			orders = JSON.parse(this.responseText)['data'].details_list
 			totalOrders += orders.length;
             if(orders.length >=10) {
                 pulling = orders.length
@@ -17,11 +16,8 @@ function getStatistics() {
                 pulling = false;
             }
 			orders.map(order => {
-				let tpa = order["paid_amount"] / 100000;
+				let tpa = order.info_card.final_total / 100000;
 				totalSpent += tpa;
-				let tpsa = order["shipping_fee"] / 100000;
-                totalShippingSpent += tpsa;
-                
 			});
 			offset += 10;
 			console.log('Đã lấy được: ' + totalOrders + ' đơn hàng');
@@ -32,13 +28,14 @@ function getStatistics() {
 			else {
 				console.log("%cTổng đơn hàng thành công: "+"%c "+moneyFormat(totalOrders), "font-size: 20px;","font-size: 20px; color:red");
 				console.log("%cTổng chi tiêu: "+"%c "+moneyFormat(totalSpent)+"đ","font-size: 20px;","font-size: 20px; color:red");
-                console.log("%cTổng tiền ship: "+"%c "+moneyFormat(totalShippingSpent)+"đ", "font-size: 20px;","font-size: 20px; color:red");
 			}
 		}
 	};
-	xhttp.open("GET", "https://shopee.vn/api/v1/orders/?order_type=3&offset=" + offset + "&limit=10", true);
+	xhttp.open("GET", "https://shopee.vn/api/v4/order/get_order_list?limit=10&list_type=3&offset="+offset, true);
 	xhttp.send();
 }
+
+getStatistics()
 
 function moneyFormat(number, fixed=0) {
 	if(isNaN(number)) return 0;
@@ -52,3 +49,4 @@ function moneyFormat(number, fixed=0) {
 	return number;
 }
 getStatistics()
+
